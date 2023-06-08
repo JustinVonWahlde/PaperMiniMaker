@@ -1,0 +1,241 @@
+﻿<Window x:Class="PaperMiniMaker.AddOrEditMiniature"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PaperMiniMaker"
+        mc:Ignorable="d"
+        Background="#FF222222"
+        Height="629" 
+        Width="816"
+        ResizeMode="NoResize">
+    <Grid Background="#FF222222" Height="580" Width="790">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="590"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0"
+                    Background="#111111" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top" 
+                    Height="580" 
+                    Width="200"
+                    Margin="0,0,0,0" >
+            <StackPanel Orientation="Vertical"
+                        Margin="10,10,0,0">
+                <Label x:Name="NameLabel" 
+                       Foreground="#CCCCCC" 
+                       Content="Miniature Name:" 
+                       Height="26"
+                       Width="190"/>
+                <TextBox x:Name="nameTextBox"
+                         Height="20"
+                         Width="180"
+                         Margin="0,0,10,0" 
+                         LostFocus="TextBox_LostFocus"
+                         KeyUp="TextBox_KeyUp"
+                         DataObject.Pasting="TextBox_Pasting"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" 
+                        Margin="10,10,0,0">
+                <Label x:Name="QuantityLabel" 
+                       Foreground="#CCCCCC" 
+                       Content="Quantity:" 
+                       Height="26"
+                       Width="60"/>
+                <TextBox x:Name="quantityTextBox" 
+                         Height="20"
+                         Width="50" 
+                         LostFocus="TextBox_LostFocus"
+                         KeyUp="TextBox_KeyUp"
+                         PreviewTextInput="QuantityTextBox_PreviewTextInput"
+                         DataObject.Pasting="TextBox_Pasting"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="10,10,10,0" Background="#FF222222">
+                <Label x:Name="CroppingControlsLabel" 
+                       Foreground="#CCCCCC" 
+                       Content="Cropping Controls" 
+                       Height="26" 
+                       Width="180" 
+                       HorizontalContentAlignment="Center"
+                       FontWeight="Bold"/>
+
+                <StackPanel 
+                    Orientation="Vertical" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,0,0,10" 
+                    Width="180">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <Label x:Name="IncrementLabel" 
+                               Foreground="#CCCCCC" 
+                               Content="Increment:" 
+                               Height="26" 
+                               Width="66" 
+                               HorizontalContentAlignment="Center"/>
+                        <Label x:Name="IncrementLabel2" 
+                               Foreground="#CCCCCC" 
+                               Content="{Binding ElementName=Increment, Path=Value, UpdateSourceTrigger=PropertyChanged}" 
+                               Height="26" 
+                               HorizontalContentAlignment="Center"/>
+                    </StackPanel>
+
+                    <Slider Name="Increment" 
+                            Minimum="1"
+                            Maximum="20" 
+                            Value="10"
+                            TickFrequency="1"
+                            TickPlacement="TopLeft"
+                            IsSnapToTickEnabled="True"
+                            Width="160"
+                            ValueChanged="Increment_ValueChanged"/>
+                </StackPanel>
+
+                <Label x:Name="SizeLabel" 
+                       Foreground="#CCCCCC" 
+                       Content="Size: 100%" 
+                       Height="26" 
+                       Width="120" 
+                       HorizontalContentAlignment="Center"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="ZoomOut"
+                            Content="-" 
+                            Width="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ActualHeight}" 
+                            Height="24"
+                            Padding="0,0,0,0"
+                            FontSize="18" 
+                            Foreground="#FFCCCCCC" 
+                            Background="#FF3F3F3F" 
+                            BorderThickness="0"
+                            IsEnabled="False"
+                            Click="ZoomOut_Click" 
+                            Margin="0,0,10,0"/>
+                    <Button x:Name="ZoomIn"
+                            Content="+" 
+                            Width="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ActualHeight}" 
+                            Height="24"
+                            Padding="0,0,0,0"
+                            FontSize="18" 
+                            Foreground="#FFCCCCCC" 
+                            Background="#FF3F3F3F" 
+                            BorderThickness="0"
+                            IsEnabled="False"
+                            Click="ZoomIn_Click"/>
+                </StackPanel>
+
+                <Label x:Name="LocationLabel" 
+                       Foreground="#CCCCCC" 
+                       Content="Location: (0,0)" 
+                       Height="26" 
+                       Width="120" 
+                       HorizontalContentAlignment="Center"/>
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,0">
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="24"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="24"/>
+                            <RowDefinition Height="24"/>
+                            <RowDefinition Height="24"/>
+                        </Grid.RowDefinitions>
+
+                        <Button x:Name="MoveUp"
+                                Grid.Column="1"
+                                Content="↑" 
+                                Width="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ActualHeight}" 
+                                Height="24"
+                                Padding="0,0,0,0"
+                                FontSize="18" 
+                                Foreground="#FFCCCCCC" 
+                                Background="#FF3F3F3F" 
+                                BorderThickness="0"
+                                IsEnabled="False"
+                                Click="MoveUp_Click" />
+                        <Button x:Name="MoveDown"
+                                Grid.Column="1"
+                                Grid.Row="2"
+                                Content="↓" 
+                                Width="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ActualHeight}" 
+                                Height="24"
+                                Padding="0,0,0,0"
+                                FontSize="18" 
+                                Foreground="#FFCCCCCC" 
+                                Background="#FF3F3F3F" 
+                                BorderThickness="0"
+                                IsEnabled="False"
+                                Click="MoveDown_Click" />
+                        <Button x:Name="MoveLeft"
+                                Grid.Column="0"
+                                Grid.Row="1"
+                                Content="←" 
+                                Width="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ActualHeight}" 
+                                Height="24"
+                                Padding="0,0,0,0"
+                                FontSize="18" 
+                                Foreground="#FFCCCCCC" 
+                                Background="#FF3F3F3F" 
+                                BorderThickness="0"
+                                IsEnabled="False"
+                                Click="MoveLeft_Click" />
+                        <Button x:Name="MoveRight"
+                                Grid.Column="2"
+                                Grid.Row="1"
+                                Content="→" 
+                                Width="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ActualHeight}" 
+                                Height="24"
+                                Padding="0,0,0,0"
+                                FontSize="18" 
+                                Foreground="#FFCCCCCC" 
+                                Background="#FF3F3F3F" 
+                                BorderThickness="0"
+                                IsEnabled="False"
+                                Click="MoveRight_Click" />
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" 
+                        Height="16"
+                        Margin="0,10,0,0">
+                <Button x:Name="addOrEdit" 
+                    Width="50" 
+                    Margin="45,0,0,0" 
+                    FontSize="10" 
+                    Foreground="#FFCCCCCC" 
+                    Background="#FF3F3F3F" 
+                    BorderBrush="#FF97A0A5" 
+                    Click="AddOrEdit_Click"/>
+                <Button x:Name="cancel" 
+                    Content="Cancel" 
+                    Width="50" 
+                    Margin="10,0,45,0" 
+                    FontSize="10" 
+                    Foreground="#FFCCCCCC" 
+                    Background="#FF3F3F3F" 
+                    BorderBrush="#FF97A0A5" 
+                    Click="Cancel_Click"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1"
+                    Margin="10,0,0,0">
+            <Canvas x:Name="croppingCanvas"
+                    ClipToBounds="True"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Height="580"
+                    Width="580"
+                    Background="#FFEEEEEE">
+            </Canvas>
+            
+        </StackPanel>
+    </Grid>
+</Window>
